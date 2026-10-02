@@ -5,7 +5,7 @@
     <meta property="og:title" content="Compte à rebours : The Warning en France !">
     <meta property="og:description" content="The Warning à Lyon le 12 Mars 2027 et Paris le 23 Mars 2027 !">
     <meta property="og:image" content="https://raw.githubusercontent.com/AmauCatepetl/WAWAS_FRANCE_2027/refs/heads/main/wawas_affiche_lyon_paris.jpeg">
-    <meta property="og:url" content="WAWAS_FRANCE_2027/">
+    <meta property="og:url" content="test_heure/">
     <meta property="og:type" content="website">
     <meta name="twitter:card" content="summary_large_image">
     <meta name="theme-color" content="#e63946">
@@ -55,57 +55,31 @@ body {
     <h1>THE WARNING - FRANCE</h1>
     <div id="countdown"></div>
 
-    <script>
-            const targetDateLyon = new Date("2027-03-12T20:00:00+01:00").getTime();
-            const targetDateParis = new Date("2027-03-23T20:00:00+01:00").getTime();
+<script>
+    // Format ISO avec fuseau UTC+1 (Heure d'hiver France)
+    const targetDateLyon = new Date("2027-03-12T20:00:00+01:00");
+    const targetDateParis = new Date("2027-03-23T20:00:00+01:00");
 
-            const timer = setInterval(function() {
-            const now = new Date().getTime();
-            const distanceLyon = targetDateLyon - now;
-            const distanceParis = targetDateParis - now;
+    const timer = setInterval(function() {
+        const now = new Date().getTime();
+        const distanceLyon = targetDateLyon.getTime() - now;
+        const distanceParis = targetDateParis.getTime() - now;
 
-            const daysLyon = Math.floor(distanceLyon / (1000 * 60 * 60 * 24));
-            const hoursLyon = Math.floor((distanceLyon % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-            const minutesLyon = Math.floor((distanceLyon % (1000 * 60 * 60)) / (1000 * 60));
-            const secondsLyon = Math.floor((distanceLyon % (1000 * 60)) / 1000);
+        const daysLyon = Math.floor(distanceLyon / (1000 * 60 * 60 * 24));
+        const hoursLyon = Math.floor((distanceLyon % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        const minutesLyon = Math.floor((distanceLyon % (1000 * 60 * 60)) / (1000 * 60));
+        const secondsLyon = Math.floor((distanceLyon % (1000 * 60)) / 1000);
 
-            const daysParis = Math.floor(distanceParis / (1000 * 60 * 60 * 24));
-            const hoursParis = Math.floor((distanceParis % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-            const minutesParis = Math.floor((distanceParis % (1000 * 60 * 60)) / (1000 * 60));
-            const secondsParis = Math.floor((distanceParis % (1000 * 60)) / 1000);
+        const daysParis = Math.floor(distanceParis / (1000 * 60 * 60 * 24));
+        const hoursParis = Math.floor((distanceParis % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        const minutesParis = Math.floor((distanceParis % (1000 * 60 * 60)) / (1000 * 60));
+        const secondsParis = Math.floor((distanceParis % (1000 * 60)) / 1000);
 
-            document.getElementById("countdown").innerHTML = 
-                "LYON : " +
-                daysLyon + "<span class='unit'>j</span> " + 
-                hoursLyon + "<span class='unit'>h</span> " + 
-                minutesLyon + "<span class='unit'>m</span> " + 
-                secondsLyon + "<span class='unit'>s</span>" +
-                "<br>" +
-                "PARIS : " +
-                daysParis + "<span class='unit'>j</span> " + 
-                hoursParis + "<span class='unit'>h</span> " + 
-                minutesParis + "<span class='unit'>m</span> " + 
-                secondsParis + "<span class='unit'>s</span>"
-                
-                
-                ;
-
-            if (distanceLyon < 0) {
-                clearInterval(timer);
-                document.getElementById("countdown").innerHTML = "LYON SHOWTIME !" +
-                "<br>" +
-                "PARIS : " +
-                daysParis + "<span class='unit'>j</span> " + 
-                hoursParis + "<span class='unit'>h</span> " + 
-                minutesParis + "<span class='unit'>m</span> " + 
-                secondsParis + "<span class='unit'>s</span>";
-            }
-
-            if (distanceParis < 0) {
-                clearInterval(timer);
-                document.getElementById("countdown").innerHTML = "PARIS SHOWTIME !";
-            }
-        }, 1000);
-    </script>
+        document.getElementById("countdown").innerHTML = 
+            "LYON : " + daysLyon + "<span class='unit'>j</span> " + hoursLyon + "<span class='unit'>h</span> " + minutesLyon + "<span class='unit'>m</span> " + secondsLyon + "<span class='unit'>s</span>" +
+            "<br>PARIS : " + daysParis + "<span class='unit'>j</span> " + hoursParis + "<span class='unit'>h</span> " + minutesParis + "<span class='unit'>m</span> " + secondsParis + "<span class='unit'>s</span>" +
+            "<br><br><small style='font-size: 1rem; color: #fff;'>Cible interprétée : " + targetDateLyon.toString() + "</small>";
+    }, 1000);
+</script>
 </body>
 </html>
