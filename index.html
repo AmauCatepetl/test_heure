@@ -56,14 +56,19 @@ body {
     <div id="countdown"></div>
 
 <script>
-    // Format ISO avec fuseau UTC+1 (Heure d'hiver France)
-const targetDateLyon = Date.UTC(2027, 2, 12, 19, 0, 0);
-const targetDateParis = Date.UTC(2027, 2, 23, 19, 0, 0); 
+    // Dates cibles (Mars = Heure d'hiver en France, soit UTC+1)
+    const targetDateLyon = new Date("2027-03-12T20:00:00+01:00").getTime();
+    const targetDateParis = new Date("2027-03-23T20:00:00+01:00").getTime();
 
     const timer = setInterval(function() {
-        const now = new Date.now();
-        const distanceLyon = targetDateLyon.getTime() - now;
-        const distanceParis = targetDateParis.getTime() - now;
+        const now = new Date().getTime();
+        
+        // Offset pour annuler le décalage d'heure d'été actuel (1 heure = 3 600 000 ms)
+        const isDaylightSaving = new Date().getTimezoneOffset() < -60;
+        const offset = isDaylightSaving ? 3600000 : 0;
+
+        const distanceLyon = (targetDateLyon - now) - offset;
+        const distanceParis = (targetDateParis - now) - offset;
 
         const daysLyon = Math.floor(distanceLyon / (1000 * 60 * 60 * 24));
         const hoursLyon = Math.floor((distanceLyon % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
@@ -77,8 +82,19 @@ const targetDateParis = Date.UTC(2027, 2, 23, 19, 0, 0);
 
         document.getElementById("countdown").innerHTML = 
             "LYON : " + daysLyon + "<span class='unit'>j</span> " + hoursLyon + "<span class='unit'>h</span> " + minutesLyon + "<span class='unit'>m</span> " + secondsLyon + "<span class='unit'>s</span>" +
-            "<br>PARIS : " + daysParis + "<span class='unit'>j</span> " + hoursParis + "<span class='unit'>h</span> " + minutesParis + "<span class='unit'>m</span> " + secondsParis + "<span class='unit'>s</span>" +
-            "<br><br><small style='font-size: 1rem; color: #fff;'>Cible interprétée : " + targetDateLyon.toString() + "</small>";
+            "<br>" +
+            "PARIS : " + daysParis + "<span class='unit'>j</span> " + hoursParis + "<span class='unit'>h</span> " + minutesParis + "<span class='unit'>m</span> " + secondsParis + "<span class='unit'>s</span>";
+
+        if (distanceLyon < 0) {
+            document.getElementById("countdown").innerHTML = "LYON SHOWTIME !" +
+            "<br>" +
+            "PARIS : " + daysParis + "<span class='unit'>j</span> " + hoursParis + "<span class='unit'>h</span> " + minutesParis + "<span class='unit'>m</span> " + secondsParis + "<span class='unit'>s</span>";
+        }
+
+        if (distanceParis < 0) {
+            clearInterval(timer);
+            document.getElementById("countdown").innerHTML = "PARIS SHOWTIME !";
+        }
     }, 1000);
 </script>
 </body>
