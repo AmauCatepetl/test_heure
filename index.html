@@ -57,11 +57,11 @@ body {
 
 <script>
     // Format ISO avec fuseau UTC+1 (Heure d'hiver France)
-    const targetDateLyon = new Date("2027-03-12T20:00:00+01:00");
-    const targetDateParis = new Date("2027-03-23T20:00:00+01:00");
+const targetDateLyon = Date.UTC(2027, 2, 12, 19, 0, 0);
+const targetDateParis = Date.UTC(2027, 2, 23, 19, 0, 0); 
 
     const timer = setInterval(function() {
-        const now = new Date().getTime();
+        const now = new Date.now();
         const distanceLyon = targetDateLyon.getTime() - now;
         const distanceParis = targetDateParis.getTime() - now;
 
